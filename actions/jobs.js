@@ -1,17 +1,15 @@
 "use server";
 
-import axios from "axios";
+import { db } from "@/lib/prisma";
 
 export async function getJobs() {
-
-    const options = {
-        method: 'GET',
-        url: 'https://jobdataapi.com/api/jobs/?country_code=IN&max_age=30'
-    };
-
     try {
-        const { data } = await axios.request(options);
-        return data.results;
+        const jobs = await db.job.findMany({
+            orderBy: {
+                publishedAt: "desc",
+            },
+        });
+        return jobs;
 
     } catch (error) {
         console.error("Error fetching jobs:", error);
