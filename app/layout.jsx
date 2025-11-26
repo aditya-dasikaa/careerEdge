@@ -19,6 +19,9 @@ export default function RootLayout({ children }) {
       appearance={{
         baseTheme: dark,
       }}
+      fallbackRedirectUrl="/onboarding"
+      signInFallbackRedirectUrl="/"
+      signUpFallbackRedirectUrl="/onboarding"
     >
       <html lang="en" suppressHydrationWarning>
         <head>
