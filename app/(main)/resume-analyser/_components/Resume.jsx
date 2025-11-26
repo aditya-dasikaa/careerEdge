@@ -58,7 +58,7 @@ const Resume = () => {
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle className="text-center">Upload resume pdf file </DialogTitle>
-                        <DialogDescription>
+                        <DialogDescription asChild>
                             <div>
                                 <label htmlFor="resume-upload" className="flex flex-col items-center justify-center p-7 border-dashed rounded-xl hover:bg-slate-800 cursor-pointer m-2">
                                     <File size={50} />
