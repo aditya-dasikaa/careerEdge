@@ -231,6 +231,10 @@ const config = {
         "fromEnvVar": null,
         "value": "windows",
         "native": true
+      },
+      {
+        "fromEnvVar": null,
+        "value": "rhel-openssl-3.0.x"
       }
     ],
     "previewFeatures": [],
@@ -238,7 +242,7 @@ const config = {
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": "../../../../.env",
+    "rootEnvPath": null,
     "schemaEnvPath": "../../../../.env"
   },
   "relativePath": "../../../../prisma",
@@ -257,8 +261,8 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider   = \"prisma-client-js\"\n  engineType = \"library\"\n  output     = \"../app/generated/prisma/client\" // change made here\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id              String           @id @default(uuid())\n  clerkUserId     String           @unique\n  email           String           @unique\n  name            String?\n  imageUrl        String?\n  industry        String?\n  createdAt       DateTime         @default(now())\n  updatedAt       DateTime         @updatedAt\n  bio             String?\n  experience      Int?\n  skills          String[]\n  assessments     Assessment[]\n  coverLetter     CoverLetter[]\n  resume          Resume?\n  roadmaps        Roadmap[]\n  industryInsight IndustryInsight? @relation(fields: [industry], references: [industry])\n}\n\nmodel Roadmap {\n  id      String @id @default(uuid())\n  slug    String\n  title   String\n  content Json\n  userId  String\n  user    User   @relation(fields: [userId], references: [id])\n\n  @@unique([slug, userId], name: \"slug_userId\")\n}\n\nmodel Assessment {\n  id             String   @id @default(cuid())\n  userId         String\n  quizScore      Float\n  questions      Json[]\n  category       String\n  improvementTip String?\n  createdAt      DateTime @default(now())\n  updatedAt      DateTime @updatedAt\n  user           User     @relation(fields: [userId], references: [id])\n\n  @@index([userId])\n}\n\nmodel Resume {\n  id        String   @id @default(cuid())\n  userId    String   @unique\n  content   String\n  atsScore  Float?\n  feedback  String?\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  user      User     @relation(fields: [userId], references: [id])\n}\n\nmodel CoverLetter {\n  id             String   @id @default(cuid())\n  userId         String\n  content        String\n  jobDescription String?\n  companyName    String\n  jobTitle       String\n  status         String   @default(\"draft\")\n  createdAt      DateTime @default(now())\n  updatedAt      DateTime @updatedAt\n  user           User     @relation(fields: [userId], references: [id])\n\n  @@index([userId])\n}\n\nmodel IndustryInsight {\n  id                String   @id @default(cuid())\n  industry          String   @unique\n  salaryRanges      Json[]\n  growthRate        Float\n  demandLevel       String\n  topSkills         String[]\n  marketOutlook     String\n  keyTrends         String[]\n  recommendedSkills String[]\n  lastUpdated       DateTime @default(now())\n  nextUpdate        DateTime\n  users             User[]\n\n  @@index([industry])\n}\n\nmodel Job {\n  id          String    @id\n  title       String\n  company     String\n  location    String?\n  publishedAt DateTime?\n  url         String?\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime\n}\n",
-  "inlineSchemaHash": "18ef854ce4a691724b2885ec3f98f47b957bbbc427f98148854eec4358fa682b",
+  "inlineSchema": "generator client {\n  provider      = \"prisma-client-js\"\n  engineType    = \"library\"\n  output        = \"../app/generated/prisma/client\"\n  binaryTargets = [\"native\", \"rhel-openssl-3.0.x\"]\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id              String           @id @default(uuid())\n  clerkUserId     String           @unique\n  email           String           @unique\n  name            String?\n  imageUrl        String?\n  industry        String?\n  createdAt       DateTime         @default(now())\n  updatedAt       DateTime         @updatedAt\n  bio             String?\n  experience      Int?\n  skills          String[]\n  assessments     Assessment[]\n  coverLetter     CoverLetter[]\n  resume          Resume?\n  roadmaps        Roadmap[]\n  industryInsight IndustryInsight? @relation(fields: [industry], references: [industry])\n}\n\nmodel Roadmap {\n  id      String @id @default(uuid())\n  slug    String\n  title   String\n  content Json\n  userId  String\n  user    User   @relation(fields: [userId], references: [id])\n\n  @@unique([slug, userId], name: \"slug_userId\")\n}\n\nmodel Assessment {\n  id             String   @id @default(cuid())\n  userId         String\n  quizScore      Float\n  questions      Json[]\n  category       String\n  improvementTip String?\n  createdAt      DateTime @default(now())\n  updatedAt      DateTime @updatedAt\n  user           User     @relation(fields: [userId], references: [id])\n\n  @@index([userId])\n}\n\nmodel Resume {\n  id        String   @id @default(cuid())\n  userId    String   @unique\n  content   String\n  atsScore  Float?\n  feedback  String?\n  createdAt DateTime @default(now())\n  updatedAt DateTime @updatedAt\n  user      User     @relation(fields: [userId], references: [id])\n}\n\nmodel CoverLetter {\n  id             String   @id @default(cuid())\n  userId         String\n  content        String\n  jobDescription String?\n  companyName    String\n  jobTitle       String\n  status         String   @default(\"draft\")\n  createdAt      DateTime @default(now())\n  updatedAt      DateTime @updatedAt\n  user           User     @relation(fields: [userId], references: [id])\n\n  @@index([userId])\n}\n\nmodel IndustryInsight {\n  id                String   @id @default(cuid())\n  industry          String   @unique\n  salaryRanges      Json[]\n  growthRate        Float\n  demandLevel       String\n  topSkills         String[]\n  marketOutlook     String\n  keyTrends         String[]\n  recommendedSkills String[]\n  lastUpdated       DateTime @default(now())\n  nextUpdate        DateTime\n  users             User[]\n\n  @@index([industry])\n}\n\nmodel Job {\n  id          String    @id\n  title       String\n  company     String\n  location    String?\n  publishedAt DateTime?\n  url         String?\n  createdAt   DateTime  @default(now())\n  updatedAt   DateTime\n}\n",
+  "inlineSchemaHash": "8be3e8a55cb5b1116144e8f2b81d217ff633de78778dd6d7c76f6a47b3090105",
   "copyEngine": true
 }
 
@@ -299,6 +303,10 @@ Object.assign(exports, Prisma)
 // file annotations for bundling tools to include these files
 path.join(__dirname, "query_engine-windows.dll.node");
 path.join(process.cwd(), "app/generated/prisma/client/query_engine-windows.dll.node")
+
+// file annotations for bundling tools to include these files
+path.join(__dirname, "libquery_engine-rhel-openssl-3.0.x.so.node");
+path.join(process.cwd(), "app/generated/prisma/client/libquery_engine-rhel-openssl-3.0.x.so.node")
 // file annotations for bundling tools to include these files
 path.join(__dirname, "schema.prisma");
 path.join(process.cwd(), "app/generated/prisma/client/schema.prisma")
